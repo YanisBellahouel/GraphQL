@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Profile</title>
+</head>
+<body>
+	<h1>Bienvenue, <span id="username"></span></h1>
+	<p id="xp"></p>
+	<h2>Grades</h2>
+	<ul id="grades"></ul>
+	<button onclick="logout()">Se déconnecter</button>
+
+<h2>Évolution de l'XP</h2>
+<svg id="xpGraph" width="500" height="200" style="border: 1px solid black;"></svg>
+
+<h2>Répartition des Grades</h2>
+<svg id="gradePie" width="200" height="200" style="border: 1px solid black;"></svg>
+
+
+	<script src="profile.js"></script>
+	<script>
+		function logout() {
+			localStorage.removeItem('jwt');
+			window.location.href = 'login.html';
+		}
+	</script>
+</body>
+</html>
