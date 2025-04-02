@@ -22,8 +22,11 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 			throw new Error(errorData.error || 'Invalid credentials');
 		}
 
-		const token = await response.text();
+		// Lire la réponse JSON
+		const data = await response.json();
+		console.log('Response data:', data);
 
+		const token = data ? data : null;
 		console.log('Token received:', token);
 
 		if (token) {
@@ -31,10 +34,10 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 			console.log('JWT stored successfully!');
 			window.location.href = 'profile.html';
 		} else {
-			console.log('Error: No valid token received');
+			throw new Error('No valid token received');
 		}
 	} catch (error) {
-		console.error('Login failed: ' + error.message);
+		console.error('Login failed:', error.message);
 		alert('Login failed: ' + error.message);
 	}
 });
