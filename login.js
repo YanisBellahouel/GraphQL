@@ -22,7 +22,6 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 			throw new Error(errorData.error || 'Invalid credentials');
 		}
 
-		// Lire la réponse JSON
 		const data = await response.json();
 		console.log('Response data:', data);
 

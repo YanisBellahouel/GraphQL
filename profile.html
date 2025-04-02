@@ -3,18 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Profile</title>
+	<title>Profil Utilisateur</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<p id="profile-info"></p>
-	<button id="logout-button">Logout</button>
+
+	<header>
+		<h1>Mon Profil</h1>
+		<button id="logout-button">Déconnexion</button>
+	</header>
+
+	<main>
+		<section id="profile">
+			<h2>Informations du Profil</h2>
+			<p id="profile-info"></p>
+			<p id="auditRatio"></p>
+			<p id="xp"></p>
+		</section>
+
+		<section id="xp-chart">
+			<h2>XP par Projet</h2>
+			<svg id="xp-bar-chart" width="600" height="300"></svg>
+		</section>
+	</main>
 
 	<script src="profile.js"></script>
-	<script>
-		function logout() {
-			localStorage.removeItem('jwt');
-			window.location.href = 'login.html';
-		}
-	</script>
+
 </body>
 </html>
