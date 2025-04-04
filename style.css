@@ -1,89 +1,33 @@
-/* Styles généraux */
-body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	background-color: #f4f4f4;
-	color: #333;
-}
-
-/* En-tête */
-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #007bff;
-	color: white;
-	padding: 15px;
-}
-
-h1 {
-	margin: 0;
-}
-
-/* Bouton déconnexion */
-#logout-button {
-	background-color: #ff4d4d;
-	color: white;
-	border: none;
-	padding: 10px 15px;
-	cursor: pointer;
-	font-size: 16px;
-	border-radius: 5px;
-}
-
-#logout-button:hover {
-	background-color: #cc0000;
-}
-
-/* Contenu principal */
-main {
-	width: 80%;
-	margin: 20px auto;
-	background: white;
-	padding: 20px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
-}
-
-/* Sections */
-section {
-	margin-bottom: 20px;
-	padding: 15px;
-	border-bottom: 2px solid #ddd;
-}
-
-h2 {
-	color: #007bff;
-}
-
-/* Amélioration du SVG (Graphique XP) */
-#xp-chart {
-	text-align: center;
+#svg-container {
+    width: 100%;
+    max-height: 600px;
+	max-width: 1200px;
+    overflow-y: auto;
+	overflow-x: hidden;
+    border: 1px solid #ccc;
 }
 
 #xp-bar-chart {
-	display: block;
-	margin: 0 auto;
-	background-color: transparent;
-	border: none;
+    display: block;
+    background-color: white;
 }
 
+
 rect {
-	stroke: #007bff;
-	stroke-width: 2;
-	fill: rgba(0, 123, 255, 0.7);
-	transition: fill 0.3s;
+    stroke: #007bff;
+    stroke-width: 2;
+    fill: rgba(0, 123, 255, 0.7);
+    transition: fill 0.3s;
 }
 
 rect:hover {
-	fill: rgba(0, 123, 255, 1);
+    fill: rgba(0, 123, 255, 1);
 }
 
-/* Style du texte des labels */
 text {
-	fill: #333;
-	font-size: 12px;
-	font-weight: bold;
+    fill: black;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
 }
+
 
