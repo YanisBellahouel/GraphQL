@@ -83,10 +83,8 @@ async function fetchProfile() {
 			};
 		});
 
-		// Échantillonner tous les 5 points (si besoin)
 		const sampled = xpCumulative.filter((_, i) => i % 20 === 0);
 
-		// Lissage (optionnel)
 		const smoothed = smoothData(sampled);
 
 		drawBarChart(xpData);
@@ -194,7 +192,6 @@ function drawXPOverTime(data) {
 		svg.appendChild(circle);
 	});
 
-	// Axe X : quelques dates espacées
 	const dateCount = 5;
 	for (let i = 0; i <= dateCount; i++) {
 		const ratio = i / dateCount;
