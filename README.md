@@ -1,4 +1,4 @@
-# GraphQL Profile Viewer
+# GraphQL
 
 Ce projet est une application web qui permet de visualiser des données utilisateur, telles que l'XP par projet et l'évolution de l'XP dans le temps, en utilisant une API GraphQL.
 
