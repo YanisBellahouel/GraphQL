@@ -1,17 +1,96 @@
-#svg-container {
-	width: 100%;
-	max-height: 600px;
-	max-width: 1200px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	border: 1px solid #ccc;
+/* ======= GLOBAL ======= */
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #333;
+	color: #f0f0f0;
+	margin: 0;
+	padding: 0;
+	line-height: 1.6;
 }
 
+h1, h2 {
+	color: #ffffff;
+}
+
+/* ======= HEADER ======= */
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #444;
+	color: #fff;
+	padding: 1rem 2rem;
+	flex-wrap: wrap;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+	margin: 0;
+	font-size: 1.6rem;
+}
+
+#logout-button {
+	background-color: #666;
+	color: #fff;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s;
+	margin-top: 10px;
+}
+
+#logout-button:hover {
+	background-color: #000;
+}
+
+/* ======= MAIN LAYOUT ======= */
+main {
+	max-width: 1200px;
+	margin: 2rem auto;
+	padding: 0 1rem;
+}
+
+section {
+	background-color: #444;
+	color: #fff;
+	border: 1px solid #555;
+	border-radius: 8px;
+	padding: 1.5rem;
+	margin-bottom: 2rem;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+section h2 {
+	margin-top: 0;
+	border-left: 4px solid #007bff;
+	padding-left: 10px;
+}
+
+/* ======= PROFILE INFO ======= */
+#profile-info, #xp, #auditRatio {
+	font-size: 1.1rem;
+	margin: 0.5rem 0;
+}
+
+/* ======= SVG CONTAINER ======= */
+#svg-container {
+	width: 95%;
+	max-height: 600px;
+	overflow-y: auto;
+	border: 1px solid #555;
+	border-radius: 8px;
+	background-color: #fff;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+
+/* ======= XP BAR CHART ======= */
 #xp-bar-chart {
 	display: block;
 	background-color: white;
+	width: 100%;
 }
-
 
 rect {
 	stroke: #007bff;
@@ -25,31 +104,84 @@ rect:hover {
 }
 
 text {
-	fill: black;
+	fill: #222;
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 }
 
-
-/* ==== LINE CHART (XP Over Time) amélioré ==== */
+/* ======= LINE CHART ======= */
 #xp-line-chart {
 	display: block;
 	background-color: white;
 	border: 1px solid #ccc;
 	border-radius: 8px;
-	padding: 1rem;
-	overflow-x: auto;
+	padding: 0.5rem;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	width: 95%;
 }
 
-/* Lignes du graphique */
-#xp-line-chart line {
-	stroke: #007bff;
+line {
+	stroke: blue;
 	stroke-width: 2;
 }
 
-/* Points du graphique */
-#xp-line-chart circle {
-	fill: #ff4757;
+circle {
+	fill: red;
 	stroke: white;
 	stroke-width: 2;
+	transition: opacity 0.3s ease;
+}
+
+/* ======= TOOLTIP (optionnel) ======= */
+.tooltip {
+	position: absolute;
+	background: white;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-size: 12px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+	color: #333;
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 768px) {
+	header {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	#logout-button {
+		width: 100%;
+		margin-top: 1rem;
+	}
+
+	h1 {
+		font-size: 1.4rem;
+	}
+
+	section h2 {
+		font-size: 1.2rem;
+	}
+
+	#svg-container{
+		overflow-x: auto;
+	}
+
+	/* ======= SCROLLABLE GRAPH CONTAINER ======= */
+.svg-scroll {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	border-radius: 8px;
+}
+
+/* For SVGs inside the scroll wrapper */
+.svg-scroll svg {
+	min-width: 600px;
+	width: 100%;
+}
+
 }

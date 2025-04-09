@@ -3,19 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Profil Utilisateur</title>
+	<title>User Profile</title>
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 	<header>
-		<h1>Mon Profil</h1>
-		<button id="logout-button">Déconnexion</button>
+		<h1>My profile</h1>
+		<button id="logout-button">Logout</button>
 	</header>
 
 	<main>
 		<section id="profile">
-			<h2>Informations du Profil</h2>
+			<h2>Info Profile</h2>
 			<p id="profile-info"></p>
 			<p id="auditRatio"></p>
 			<p id="xp"></p>
@@ -30,9 +30,12 @@
 
 		<section id="xp-line-section">
 			<h2>XP Over Time</h2>
-			<svg id="xp-line-chart" width="1200" height="600"></svg>
+			<div class="svg-scroll">
+				<svg id="xp-line-chart" width="1200" height="600"></svg>
+			</div>
 		</section>
 
+		<div id="tooltip" class="tooltip" style="display: none;"></div>
 
 
 	</main>

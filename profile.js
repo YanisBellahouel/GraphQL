@@ -54,7 +54,7 @@ async function fetchProfile() {
 		const user = data.user[0];
 		const totalXP = user.xps.reduce((sum, xp) => sum + xp.amount, 0);
 
-		document.getElementById('profile-info').innerText = `Welcome, ${user.login} !`;
+		document.getElementById('profile-info').innerText = `Username: ${user.login}`;
 		document.getElementById('xp').innerText = `XP: ${totalXP}`;
 		document.getElementById('auditRatio').innerText = `Audits Ratio: ${user.auditRatio}`;
 
@@ -83,12 +83,12 @@ async function fetchProfile() {
 			};
 		});
 
-		const sampled = xpCumulative.filter((_, i) => i % 20 === 0);
+		// const sampled = xpCumulative.filter((_, i) => i % 20 === 0);
 
-		const smoothed = smoothData(sampled);
+		const smoothed = smoothData(xpCumulative);
 
 		drawBarChart(xpData);
-		drawXPOverTime(smoothed);
+		drawXPOverTime(smoothed, totalXP);
 
 	} catch (error) {
 		console.error('Error fetching profile:', error.message);
@@ -120,7 +120,7 @@ function drawBarChart(data) {
 	svg.setAttribute('height', height);
 
 	data.forEach((d, i) => {
-		const barWidth = Math.min((d.xp / maxXP) * (width - 100) * 0.5, 1000);
+		const barWidth = Math.min((d.xp / maxXP) * (width - 100) * 0.1, 900);
 
 		const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 		rect.setAttribute('x', 100);
@@ -144,12 +144,12 @@ function drawBarChart(data) {
 		xpText.setAttribute('y', i * (barHeight + barSpacing) + barHeight / 2);
 		xpText.setAttribute('alignment-baseline', 'middle');
 		xpText.setAttribute('font-size', '12px');
-		xpText.textContent = d.xp;
+		xpText.textContent = d.xp + ' XP';
 		svg.appendChild(xpText);
 	});
 }
 
-function drawXPOverTime(data) {
+function drawXPOverTime(data, totalXP) {
 	const svg = document.getElementById('xp-line-chart');
 	svg.innerHTML = '';
 
@@ -158,20 +158,22 @@ function drawXPOverTime(data) {
 		return;
 	}
 
-	const width = 800;
-	const height = 400;
+	const width = 1000;
+	const height = 500;
 	const padding = 60;
 
 	svg.setAttribute('width', width);
 	svg.setAttribute('height', height);
 
-	const maxXP = Math.max(...data.map(d => d.xp));
+	const maxXP = totalXP;
+	const minXP = 0;
 	const minDate = data[0].date;
 	const maxDate = data[data.length - 1].date;
 
 	const xScale = d => ((d - minDate) / (maxDate - minDate)) * (width - 2 * padding) + padding;
-	const yScale = xp => height - padding - (xp / maxXP) * (height - 2 * padding);
+	const yScale = xp => height - padding - ((xp - minXP) / (maxXP - minXP)) * (height - 2 * padding);
 
+	// Courbe
 	for (let i = 0; i < data.length - 1; i++) {
 		const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 		line.setAttribute('x1', xScale(data[i].date));
@@ -183,16 +185,48 @@ function drawXPOverTime(data) {
 		svg.appendChild(line);
 	}
 
+	const tooltip = document.getElementById('tooltip');
+
 	data.forEach(d => {
 		const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-		circle.setAttribute('cx', xScale(d.date));
-		circle.setAttribute('cy', yScale(d.xp));
-		circle.setAttribute('r', 4);
+		const cx = xScale(d.date);
+		const cy = yScale(d.xp);
+
+		circle.setAttribute('cx', cx);
+		circle.setAttribute('cy', cy);
+		circle.setAttribute('r', 5);
 		circle.setAttribute('fill', 'red');
+		circle.setAttribute('stroke', 'black');
+		circle.setAttribute('stroke-width', 1);
+		circle.style.cursor = 'pointer';
+		circle.style.opacity = 0;
+		circle.style.transition = 'opacity 0.3s';
+
+		circle.addEventListener('mouseenter', (e) => {
+			circle.style.opacity = 1;
+			tooltip.innerHTML = `
+				<strong>XP:</strong> ${Math.round(d.xp)}<br>
+				<strong>Date:</strong> ${d.date.toLocaleDateString()}
+			`;
+			tooltip.style.display = 'block';
+		});
+
+		circle.addEventListener('mousemove', (e) => {
+			tooltip.style.left = e.pageX + 15 + 'px';
+			tooltip.style.top = e.pageY - 20 + 'px';
+		});
+
+		circle.addEventListener('mouseleave', () => {
+			circle.style.opacity = 0;
+			tooltip.style.display = 'none';
+		});
+
 		svg.appendChild(circle);
 	});
 
-	const dateCount = 5;
+
+	// Graduation X (dates)
+	const dateCount = 6;
 	for (let i = 0; i <= dateCount; i++) {
 		const ratio = i / dateCount;
 		const date = new Date(minDate.getTime() + ratio * (maxDate - minDate));
@@ -204,6 +238,23 @@ function drawXPOverTime(data) {
 		text.setAttribute('text-anchor', 'middle');
 		text.setAttribute('font-size', '12px');
 		text.textContent = date.toLocaleDateString('fr-FR');
+		svg.appendChild(text);
+	}
+
+	// Graduation Y (XP)
+	const steps = 5;
+	for (let i = 0; i <= steps; i++) {
+		const ratio = i / steps;
+		const xpValue = minXP + ratio * (maxXP - minXP);
+		const y = yScale(xpValue);
+
+		const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+		text.setAttribute('x', padding - 10);
+		text.setAttribute('y', y);
+		text.setAttribute('text-anchor', 'end');
+		text.setAttribute('alignment-baseline', 'middle');
+		text.setAttribute('font-size', '12px');
+		text.textContent = Math.round(xpValue);
 		svg.appendChild(text);
 	}
 }
