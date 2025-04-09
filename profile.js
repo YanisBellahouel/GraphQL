@@ -4,7 +4,7 @@ async function fetchProfile() {
 	const token = localStorage.getItem('jwt');
 	if (!token) {
 		console.log('Not authenticated! Redirecting to login...');
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 		return;
 	}
 
@@ -83,8 +83,6 @@ async function fetchProfile() {
 			};
 		});
 
-		// const sampled = xpCumulative.filter((_, i) => i % 20 === 0);
-
 		const smoothed = smoothData(xpCumulative);
 
 		drawBarChart(xpData);
@@ -93,17 +91,19 @@ async function fetchProfile() {
 	} catch (error) {
 		console.error('Error fetching profile:', error.message);
 		localStorage.removeItem('jwt');
-		window.location.href = 'login.html';
+		window.location.href = 'index.html';
 	}
 }
 
 window.onload = fetchProfile;
 
+// Logout button
 document.getElementById('logout-button').addEventListener('click', () => {
 	localStorage.removeItem('jwt');
-	window.location.href = 'login.html';
+	window.location.href = 'index.html';
 });
 
+// Graph for XP by Project
 function drawBarChart(data) {
 	const svg = document.getElementById('xp-bar-chart');
 	svg.innerHTML = '';
@@ -149,6 +149,7 @@ function drawBarChart(data) {
 	});
 }
 
+// Graph for XP Over Time
 function drawXPOverTime(data, totalXP) {
 	const svg = document.getElementById('xp-line-chart');
 	svg.innerHTML = '';
@@ -173,7 +174,6 @@ function drawXPOverTime(data, totalXP) {
 	const xScale = d => ((d - minDate) / (maxDate - minDate)) * (width - 2 * padding) + padding;
 	const yScale = xp => height - padding - ((xp - minXP) / (maxXP - minXP)) * (height - 2 * padding);
 
-	// Courbe
 	for (let i = 0; i < data.length - 1; i++) {
 		const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
 		line.setAttribute('x1', xScale(data[i].date));
