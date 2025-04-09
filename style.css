@@ -170,18 +170,20 @@ circle {
 		overflow-x: auto;
 	}
 
-	/* ======= SCROLLABLE GRAPH CONTAINER ======= */
-.svg-scroll {
-	width: 100%;
-	overflow-x: auto;
-	overflow-y: hidden;
-	border-radius: 8px;
-}
+	#xp-line-chart {
+		overflow-x: auto;
+	}
 
-/* For SVGs inside the scroll wrapper */
-.svg-scroll svg {
-	min-width: 600px;
-	width: 100%;
-}
+	.svg-scroll {
+		width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		border-radius: 8px;
+	}
+
+	.svg-scroll svg {
+		min-width: 1100px;
+		width: 100%;
+	}
 
 }
