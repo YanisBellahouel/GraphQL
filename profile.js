@@ -4,7 +4,7 @@ async function fetchProfile() {
 	const token = localStorage.getItem('jwt');
 	if (!token) {
 		console.log('Not authenticated! Redirecting to login...');
-		window.location.href = 'index.html';
+		// window.location.href = 'index.html';
 		return;
 	}
 
@@ -14,6 +14,7 @@ async function fetchProfile() {
 			id
 			login
 			auditRatio
+			attrs
 			xps {
 				amount
 				originEventId
@@ -54,8 +55,9 @@ async function fetchProfile() {
 		const user = data.user[0];
 		const totalXP = user.xps.reduce((sum, xp) => sum + xp.amount, 0);
 
-		document.getElementById('profile-info').innerText = `Username: ${user.login}`;
-		document.getElementById('xp').innerText = `XP: ${totalXP}`;
+		document.getElementById('username').innerText = `Username: ${user.login}`;
+		document.getElementById('email').innerText = `Email: ${user.attrs.email}`;
+		document.getElementById('xp').innerText = `Total XP: ${totalXP}`;
 		document.getElementById('auditRatio').innerText = `Audits Ratio: ${user.auditRatio}`;
 
 		const xpByProject = {};
@@ -91,7 +93,7 @@ async function fetchProfile() {
 	} catch (error) {
 		console.error('Error fetching profile:', error.message);
 		localStorage.removeItem('jwt');
-		window.location.href = 'index.html';
+		// window.location.href = 'index.html';
 	}
 }
 
